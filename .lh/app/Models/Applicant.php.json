@@ -1,0 +1,18 @@
+{
+    "sourceFile": "app/Models/Applicant.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751674025490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751674025490,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Applicant extends Model\n{\n    use HasFactory;\n\n    protected $primaryKey = 'applicant_id';\n    public $incrementing = false;\n    protected $keyType = 'string';\n\n    protected $fillable = [\n        'applicant_id',\n        'name',\n        'email',\n        'phone',\n        'cv_file',\n        'applied_position_id',\n        'status',\n    ];\n\n    // Relasi ke lowongan\n    public function jobVacancy()\n    {\n        return $this->belongsTo(JobVacancy::class, 'applied_position_id', 'vacancy_id');\n    }\n}"
+        }
+    ]
+}
