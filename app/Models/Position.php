@@ -20,4 +20,9 @@ class Position extends Model
     {
         return $this->hasMany(JobVacancy::class, 'position_id', 'position_id');
     }
+
+    public function employees()
+    {
+        return $this->hasOne(Employee::class, 'position_id', 'position_id');
+    }
 }
