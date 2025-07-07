@@ -13,12 +13,19 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
+        try {
+            $departments = Department::all();
 
-        return response()->json([
-            'message' => 'Departments retrieved successfully',
-            'data' => $departments,
-        ], 200);
+            return response()->json([
+                'message' => 'Departments retrieved successfully',
+                'data' => $departments,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to retrieve departments',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
