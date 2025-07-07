@@ -16,7 +16,6 @@ class JobVacancy extends Model
     protected $fillable = [
         'vacancy_id',
         'position_id',
-        'title',
         'description',
         'requirements',
         'deadline',
