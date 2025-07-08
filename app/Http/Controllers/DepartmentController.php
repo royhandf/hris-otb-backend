@@ -17,12 +17,12 @@ class DepartmentController extends Controller
             $departments = Department::all();
 
             return response()->json([
-                'message' => 'Departments retrieved successfully',
+                'message' => 'Daftar departemen berhasil diambil',
                 'data' => $departments,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to retrieve departments',
+                'message' => 'Gagal mengambil daftar departemen',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -50,17 +50,17 @@ class DepartmentController extends Controller
             $department = Department::create($validated);
 
             return response()->json([
-                'message' => 'Department created successfully',
+                'message' => 'Departemen berhasil dibuat',
                 'data' => $department,
             ], 201);
         } catch (ValidationException $e) {
             return response()->json([
-                'message' => 'Validation error',
+                'message' => 'Data yang diberikan tidak valid',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to create department',
+                'message' => 'Gagal membuat departemen',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -75,12 +75,12 @@ class DepartmentController extends Controller
 
         if (!$departments) {
             return response()->json([
-                'message' => 'Department not found',
+                'message' => 'Departemen tidak ditemukan',
             ], 404);
         }
 
         return response()->json([
-            'message' => 'Department retrieved successfully',
+            'message' => 'Departemen berhasil ditemukan',
             'data' => $departments,
         ], 200);
     }
@@ -95,7 +95,7 @@ class DepartmentController extends Controller
 
             if (!$department) {
                 return response()->json([
-                    'message' => 'Department not found',
+                    'message' => 'Departemen tidak ditemukan',
                 ], 404);
             }
 
@@ -107,17 +107,17 @@ class DepartmentController extends Controller
             $department->update($validated);
 
             return response()->json([
-                'message' => 'Department updated successfully',
+                'message' => 'Departemen berhasil diperbarui',
                 'data' => $department,
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
-                'message' => 'Validation error',
+                'message' => 'Data yang diberikan tidak valid',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to update department',
+                'message' => 'Gagal memperbarui departemen',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -132,7 +132,7 @@ class DepartmentController extends Controller
 
         if (!$department) {
             return response()->json([
-                'message' => 'Department not found',
+                'message' => 'Departemen tidak ditemukan',
             ], 404);
         }
 
@@ -140,11 +140,11 @@ class DepartmentController extends Controller
             $department->delete();
 
             return response()->json([
-                'message' => 'Department deleted successfully',
+                'message' => 'Departemen berhasil dihapus',
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to delete department',
+                'message' => 'Gagal menghapus departemen',
                 'error' => $e->getMessage(),
             ], 500);
         }

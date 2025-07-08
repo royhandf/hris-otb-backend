@@ -21,12 +21,12 @@ class EmployeeController extends Controller
             ])->latest()->paginate(10);
 
             return response()->json([
-                'message' => 'Employees retrieved successfully',
+                'message' => 'Daftar karyawan berhasil diambil',
                 'data' => $employees,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to retrieve employees',
+                'message' => 'Gagal mengambil daftar karyawan',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -63,17 +63,17 @@ class EmployeeController extends Controller
             $employee = Employee::create($validated);
 
             return response()->json([
-                'message' => 'Employee created successfully',
+                'message' => 'Karyawan berhasil dibuat',
                 'data' => $employee,
             ], 201);
         } catch (ValidationException $e) {
             return response()->json([
-                'message' => 'Validation error',
+                'message' => 'Data yang diberikan tidak valid',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to create employee',
+                'message' => 'Gagal membuat data karyawan',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -91,12 +91,12 @@ class EmployeeController extends Controller
 
         if (!$employee) {
             return response()->json([
-                'message' => 'Employee not found',
+                'message' => 'Data karyawan tidak ditemukan',
             ], 404);
         }
 
         return response()->json([
-            'message' => 'Employee retrieved successfully',
+            'message' => 'Data karyawan berhasil ditemukan',
             'data' => $employee,
         ], 200);
     }
@@ -111,7 +111,7 @@ class EmployeeController extends Controller
 
             if (!$employee) {
                 return response()->json([
-                    'message' => 'Employee not found',
+                    'message' => 'Data karyawan tidak ditemukan',
                 ], 404);
             }
 
@@ -147,17 +147,17 @@ class EmployeeController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Employee updated successfully',
+                'message' => 'Data karyawan berhasil diperbarui',
                 'data' => $employee,
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
-                'message' => 'Validation error',
+                'message' => 'Data yang diberikan tidak valid',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to update employee',
+                'message' => 'Gagal memperbarui data karyawan',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -172,7 +172,7 @@ class EmployeeController extends Controller
 
         if (!$employee) {
             return response()->json([
-                'message' => 'Employee not found',
+                'message' => 'Data karyawan tidak ditemukan',
             ], 404);
         }
 
@@ -188,11 +188,11 @@ class EmployeeController extends Controller
             $employee->delete();
 
             return response()->json([
-                'message' => 'Employee deleted successfully',
+                'message' => 'Berhasil menghapus data karyawan',
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Failed to delete employee',
+                'message' => 'Gagal menghapus data karyawan',
                 'error' => $e->getMessage(),
             ], 500);
         }
