@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         $hrdEmployee = Employee::create([
             'employee_id' => Str::uuid(),
-            'name' => 'Human Resource',
+            'name' => 'posm Resource',
             'join_date' => now(),
         ]);
 
