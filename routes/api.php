@@ -6,7 +6,9 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\UserController;
 
 // Route untuk tes koneksi API
 Route::get('/ping', fn() => response()->json(['message' => 'pong']));
@@ -28,8 +30,14 @@ Route::prefix('v1')->group(function () {
         // ROUTE KHUSUS MANAJER
 
         // ROUTE KHUSUS ADMIN
+        Route::middleware('role:admin')->group(function () {
+            Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword']);
+        });
 
         // ROUTE KHUSUS KARYAWAN
+        Route::middleware('role:karyawan')->group(function () {
+            Route::apiResource('leave-requests', LeaveRequestController::class);
+        });
 
         Route::post('/logout', [AuthController::class, 'logout']);
     });
