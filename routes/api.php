@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\UserController;
 
 // Route untuk tes koneksi API
@@ -28,6 +30,7 @@ Route::prefix('v1')->group(function () {
         });
 
         // ROUTE KHUSUS MANAJER
+        Route::middleware('role:manager')->group(function () {});
 
         // ROUTE KHUSUS ADMIN
         Route::middleware('role:admin')->group(function () {
@@ -39,6 +42,9 @@ Route::prefix('v1')->group(function () {
             Route::apiResource('leave-requests', LeaveRequestController::class);
         });
 
+        // Interviews
+        Route::apiResource('interviews', InterviewController::class);
+        Route::apiResource('attendances', AttendanceController::class);
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 
