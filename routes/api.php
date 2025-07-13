@@ -29,9 +29,6 @@ Route::prefix('v1')->group(function () {
             Route::apiResource('positions', PositionController::class);
         });
 
-        // ROUTE KHUSUS MANAJER
-        Route::middleware('role:manager')->group(function () {});
-
         // ROUTE KHUSUS ADMIN
         Route::middleware('role:admin')->group(function () {
             Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword']);

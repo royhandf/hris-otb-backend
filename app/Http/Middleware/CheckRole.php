@@ -23,7 +23,6 @@ class CheckRole
             return response()->json([
                 'message' => 'Forbidden, you do not have permission to access this resource.',
                 'user_role' => $request->user()->role,
-                'allowed_roles' => $roles,
             ], 403);
         }
 

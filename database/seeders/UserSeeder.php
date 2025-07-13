@@ -23,13 +23,7 @@ class UserSeeder extends Seeder
 
         $hrdEmployee = Employee::create([
             'employee_id' => Str::uuid(),
-            'name' => 'posm Resource',
-            'join_date' => now(),
-        ]);
-
-        $managerEmployee = Employee::create([
-            'employee_id' => Str::uuid(),
-            'name' => 'Manager User',
+            'name' => 'Agus Saputra',
             'join_date' => now(),
         ]);
 
@@ -47,14 +41,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password123'),
             'role' => 'hr',
             'employee_id' => $hrdEmployee->employee_id,
-        ]);
-
-        User::create([
-            'user_id' => Str::uuid(),
-            'email' => 'Suherman@gmail.com',
-            'password' => Hash::make('taikucing123'),
-            'role' => 'manajer',
-            'employee_id' => $managerEmployee->employee_id,
         ]);
     }
 }
