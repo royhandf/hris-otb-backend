@@ -32,9 +32,13 @@ Route::prefix('v1')->group(function () {
         });
 
         // ROUTE KHUSUS MANAJER
+<<<<<<< Updated upstream
+        Route::middleware('role:manager')->group(function () {});
+=======
         Route::middleware('role:manager')->group(function () {
             Route::get('/interviews', [InterviewController::class, 'index']);
         });
+>>>>>>> Stashed changes
 
         // ROUTE KHUSUS ADMIN
         Route::middleware('role:admin')->group(function () {
@@ -42,9 +46,13 @@ Route::prefix('v1')->group(function () {
         });
 
         // ROUTE KHUSUS KARYAWAN
+<<<<<<< Updated upstream
         Route::middleware('role:karyawan')->group(function () {
             Route::apiResource('leave-requests', LeaveRequestController::class);
+=======
+        Route::middleware('role:employee')->group(function () {
             Route::apiResource('attendances', AttendanceController::class);
+>>>>>>> Stashed changes
         });
 
         Route::post('/logout', [AuthController::class, 'logout']);

@@ -64,22 +64,8 @@ class JobVacancyController extends Controller
 
             return response()->json([
                 'message' => 'Lowongan pekerjaan berhasil dibuat',
-                'data' => [
-                    'vacancy_id'   => $job->vacancy_id,
-                    'position_id'  => $job->position_id,
-                    'description'  => $job->description,
-                    'requirements' => $job->requirements,
-                    'deadline'     => $job->deadline,
-                    'created_at'   => $job->created_at,
-                    'updated_at'   => $job->updated_at,
-                    'position'     => [
-                        'name'   => $job->position->name ?? null,
-                        'salary' => $job->position->salary ?? null,
-                        'level'  => $job->position->level ?? null,
-                    ],
-                ]
+                'data' => $job,
             ], 201);
-            
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'Data yang diberikan tidak valid',

@@ -23,13 +23,13 @@ class UserSeeder extends Seeder
 
         $hrdEmployee = Employee::create([
             'employee_id' => Str::uuid(),
-            'name' => 'Agus Saputra',
+            'name' => 'posm Resource',
             'join_date' => now(),
         ]);
 
-        $employeeUser = Employee::create([
+        $managerEmployee = Employee::create([
             'employee_id' => Str::uuid(),
-            'name' => 'Ghozali',
+            'name' => 'Manager User',
             'join_date' => now(),
         ]);
 
@@ -48,8 +48,6 @@ class UserSeeder extends Seeder
             'role' => 'hr',
             'employee_id' => $hrdEmployee->employee_id,
         ]);
-<<<<<<< HEAD
-=======
 
         User::create([
             'user_id' => Str::uuid(),
@@ -58,14 +56,5 @@ class UserSeeder extends Seeder
             'role' => 'manajer',
             'employee_id' => $managerEmployee->employee_id,
         ]);
-
-        User::create([
-            'user_id' => Str::uuid(),
-            'email' => 'ghozali@example.com',
-            'password' => Hash::make('ghzli123'),
-            'role' => 'karyawan',
-            'employee_id' => $employeeUser->employee_id,
-        ]);
->>>>>>> cc79e9a (fix: adjust Interview and Attendance routes based on user roles)
     }
 }
