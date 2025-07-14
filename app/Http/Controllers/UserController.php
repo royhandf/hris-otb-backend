@@ -6,12 +6,72 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::with('employee:employee_id,name')->latest()->paginate(10);
+        return response()->json($users);
+    }
+
+    public function createUserForEmployee(Request $request)
+    {
+        $request->validate([
+            'employee_id' => [
+                'required',
+                'uuid',
+                'exists:employees,employee_id',
+                Rule::unique('users', 'employee_id')
+            ],
+            'email' => 'required|email|unique:users,email',
+            'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()],
+            'role' => ['required', Rule::in(['admin', 'hr', 'karyawan'])],
+        ], [
+            // Pesan error kustom
+            'employee_id.unique' => 'Karyawan yang dipilih sudah memiliki akun.',
+        ]);
+
+        $user = User::create([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'employee_id' => $request->employee_id,
+        ]);
+
+        $user->load('employee:employee_id,name');
+
+        return response()->json([
+            'message' => "Akun untuk {$user->employee->name} berhasil dibuat.",
+            'data' => $user
+        ], 201);
+    }
+
+    public function updateRole(Request $request, $userId)
+    {
+        $request->validate([
+            'role' => ['required', Rule::in(['admin', 'hr', 'karyawan'])],
+        ]);
+
+        $userToUpdate = User::find($userId);
+
+        if (!$userToUpdate) {
+            return response()->json(['message' => 'Pengguna tidak ditemukan.'], 404);
+        }
+
+        $userToUpdate->role = $request->role;
+        $userToUpdate->save();
+
+        return response()->json([
+            'message' => "Role untuk pengguna {$userToUpdate->email} berhasil diubah.",
+            'data' => $userToUpdate
+        ], 200);
+    }
+
     public function resetPassword(Request $request, User $user)
     {
         $request->validate([
@@ -27,7 +87,7 @@ class UserController extends Controller
     }
 
     // fungsi untuk mendapatkan data user
-    public function show()
+    public function showProfile()
     {
         $user = auth()->user();
         $user->load('employee.department', 'employee.position');
@@ -42,7 +102,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function update(Request $request)
+    public function updateProfile(Request $request)
     {
         $user = auth()->user();
         $employee = $user->employee;
@@ -111,5 +171,19 @@ class UserController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function getEmployeesWithoutAccount()
+    {
+        $existingUserEmployeeIds = User::whereNotNull('employee_id')->pluck('employee_id');
+
+        $employees = Employee::whereNotIn('employee_id', $existingUserEmployeeIds)
+            ->select('employee_id', 'name')
+            ->get();
+
+        return response()->json([
+            'message' => 'Daftar karyawan tanpa akun berhasil diambil.',
+            'data' => $employees
+        ], 200);
     }
 }
