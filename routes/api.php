@@ -39,6 +39,9 @@ Route::prefix('v1')->group(function () {
             Route::apiResource('leave-requests', LeaveRequestController::class);
         });
 
+        Route::get('/profile', [UserController::class, 'show']);
+        Route::put('/profile', [UserController::class, 'update']);
+
         // Interviews
         Route::apiResource('interviews', InterviewController::class);
         Route::apiResource('attendances', AttendanceController::class);
