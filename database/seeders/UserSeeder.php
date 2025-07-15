@@ -10,9 +10,7 @@ use App\Models\Employee;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
         $adminEmployee = Employee::create([
@@ -48,16 +46,14 @@ class UserSeeder extends Seeder
             'role' => 'hr',
             'employee_id' => $hrdEmployee->employee_id,
         ]);
-<<<<<<< HEAD
-=======
 
-        User::create([
-            'user_id' => Str::uuid(),
-            'email' => 'Suherman@gmail.com',
-            'password' => Hash::make('taikucing123'),
-            'role' => 'manajer',
-            'employee_id' => $managerEmployee->employee_id,
-        ]);
+        // User::create([
+        //     'user_id' => Str::uuid(),
+        //     'email' => 'Suherman@gmail.com',
+        //     'password' => Hash::make('taikucing123'),
+        //     'role' => 'manajer',
+        //     'employee_id' => $managerEmployee->employee_id,
+        // ]);
 
         User::create([
             'user_id' => Str::uuid(),
@@ -66,6 +62,6 @@ class UserSeeder extends Seeder
             'role' => 'karyawan',
             'employee_id' => $employeeUser->employee_id,
         ]);
->>>>>>> cc79e9a (fix: adjust Interview and Attendance routes based on user roles)
+
     }
 }
