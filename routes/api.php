@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
             Route::apiResource('departments', DepartmentController::class);
             Route::apiResource('positions', PositionController::class);
             Route::apiResource('interviews', InterviewController::class);
+            Route::apiResource('job-vacancies', JobVacancyController::class);
             Route::get('/attendances', [AttendanceController::class, 'index']);
         });
 
@@ -51,7 +52,7 @@ Route::prefix('v1')->group(function () {
     });
 
     // 📌 Job Vacancies (menggunakan resource route)
-    Route::apiResource('job-vacancies', JobVacancyController::class);
+    Route::get('/job-vacancies', [JobVacancyController::class, 'index']);
 
     // 📌 Applicants (menggunakan resource route)
     Route::apiResource('applicants', ApplicantController::class);
