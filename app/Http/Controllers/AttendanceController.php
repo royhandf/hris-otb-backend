@@ -10,12 +10,11 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        $attendances = \App\Models\Attendance::with('employee')->get();
+        $attendances = Attendance::with('employee')->get();
 
         $formatted = $attendances->map(function ($item) {
             return [
                 'attendance_id' => $item->attendance_id,
-                'employee_id'   => $item->employee_id,
                 'date'          => $item->date,
                 'check_in'      => $item->check_in,
                 'check_out'     => $item->check_out,
@@ -23,21 +22,8 @@ class AttendanceController extends Controller
                 'created_at'    => $item->created_at,
                 'updated_at'    => $item->updated_at,
                 'employee'      => [
-                    // Tidak menampilkan employee_id di sini
+                    'employee_id'        => $item->employee->employee_id,
                     'name'                => $item->employee->name,
-                    'phone'               => $item->employee->phone,
-                    'address'             => $item->employee->address,
-                    'birth_date'          => $item->employee->birth_date,
-                    'gender'              => $item->employee->gender,
-                    'photo_path'          => $item->employee->photo_path,
-                    'bank_name'           => $item->employee->bank_name,
-                    'bank_account_number' => $item->employee->bank_account_number,
-                    'join_date'           => $item->employee->join_date,
-                    'department_id'       => $item->employee->department_id,
-                    'position_id'         => $item->employee->position_id,
-                    'status'              => $item->employee->status,
-                    'created_at'          => $item->employee->created_at,
-                    'updated_at'          => $item->employee->updated_at,
                 ]
             ];
         });
@@ -68,41 +54,23 @@ class AttendanceController extends Controller
         ]);
 
         // Load relasi employee, dan pilih field yang diinginkan saja
-        $attendance->load(['employee' => function ($query) {
-            $query->select(
-                'employee_id', // tetap harus di-select untuk relasi
-                'name', 'phone', 'address', 'birth_date',
-                'gender', 'photo_path', 'bank_name', 'bank_account_number',
-                'join_date', 'department_id', 'position_id', 'status',
-                'created_at', 'updated_at'
-            );
-        }]);
+        $attendance->load('employee:employee_id,name');
 
         return response()->json([
-            'attendance_id' => $attendance->attendance_id,
-            'employee_id'   => $attendance->employee_id,
-            'date'          => $attendance->date,
-            'check_in'      => $attendance->check_in,
-            'check_out'     => $attendance->check_out,
-            'status'        => $attendance->status,
-            'created_at'    => $attendance->created_at,
-            'updated_at'    => $attendance->updated_at,
-            'employee'      => [
-                'name'                => $attendance->employee->name,
-                'phone'               => $attendance->employee->phone,
-                'address'             => $attendance->employee->address,
-                'birth_date'          => $attendance->employee->birth_date,
-                'gender'              => $attendance->employee->gender,
-                'photo_path'          => $attendance->employee->photo_path,
-                'bank_name'           => $attendance->employee->bank_name,
-                'bank_account_number' => $attendance->employee->bank_account_number,
-                'join_date'           => $attendance->employee->join_date,
-                'department_id'       => $attendance->employee->department_id,
-                'position_id'         => $attendance->employee->position_id,
-                'status'              => $attendance->employee->status,
-                'created_at'          => $attendance->employee->created_at,
-                'updated_at'          => $attendance->employee->updated_at,
-            ],
+            'message'       => 'Attendance created successfully',
+            'data'          => [
+                'attendance_id' => $attendance->attendance_id,
+                'date'          => $attendance->date,
+                'check_in'      => $attendance->check_in,
+                'check_out'     => $attendance->check_out,
+                'status'        => $attendance->status,
+                'created_at'    => $attendance->created_at,
+                'updated_at'    => $attendance->updated_at,
+                'employee'      => [
+                    'employee_id' => $attendance->employee->employee_id,
+                    'name'        => $attendance->employee->name,
+                ]
+            ]
         ], 201);
     }
     public function show($id)
@@ -116,22 +84,39 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
 
         $data = $request->validate([
-            'check_in' => 'nullable|date_format:Y-m-d H:i:s',
+            'check_in'  => 'nullable|date_format:Y-m-d H:i:s',
             'check_out' => 'nullable|date_format:Y-m-d H:i:s',
-            'status' => 'nullable|in:hadir,izin,sakit,cuti,alpha',
+            'status'    => 'nullable|in:hadir,izin,sakit,cuti,alpha',
         ]);
 
         $attendance->update($data);
 
+        $attendance->load('employee:employee_id,name');
+
         return response()->json([
             'message' => 'Attendance updated successfully',
-            'data' => $attendance
+            'data'    => [
+                'attendance_id' => $attendance->attendance_id,
+                'employee_id'   => $attendance->employee_id,
+                'date'          => $attendance->date,
+                'check_in'      => $attendance->check_in,
+                'check_out'     => $attendance->check_out,
+                'status'        => $attendance->status,
+                'created_at'    => $attendance->created_at,
+                'updated_at'    => $attendance->updated_at,
+                'employee'      => [
+                    'employee_id' => $attendance->employee->employee_id,
+                    'name'        => $attendance->employee->name,
+                ]
+            ]
         ]);
     }
 
     public function destroy($id)
     {
-        Attendance::findOrFail($id)->delete();
-        return response()->json(['message' => 'Attendance deleted']);
+        $attendance = Attendance::findOrFail($id);
+        $attendance->delete();
+
+        return response()->json(['message' => 'Attendance deleted successfully']);
     }
 }

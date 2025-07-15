@@ -39,7 +39,11 @@ Route::prefix('v1')->group(function () {
 
         // ROUTE KHUSUS ADMIN
         Route::middleware('role:admin')->group(function () {
+            Route::get('/users', [UserController::class, 'index']);
+            Route::post('/users', [UserController::class, 'createUserForEmployee']);
+            Route::post('/users/{userId}/update-role', [UserController::class, 'updateRole']);
             Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword']);
+            Route::get('/employees-without-account', [UserController::class, 'getEmployeesWithoutAccount']);
         });
 
         // ROUTE KHUSUS KARYAWAN
@@ -48,6 +52,15 @@ Route::prefix('v1')->group(function () {
             Route::apiResource('attendances', AttendanceController::class);
         });
 
+<<<<<<< HEAD
+=======
+        Route::get('/profile', [UserController::class, 'showProfile']);
+        Route::post('/profile', [UserController::class, 'updateProfile']);
+
+        // Interviews
+        Route::apiResource('interviews', InterviewController::class);
+        Route::apiResource('attendances', AttendanceController::class);
+>>>>>>> c672ae3cac7446203fa894222a9412733e218b55
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 
