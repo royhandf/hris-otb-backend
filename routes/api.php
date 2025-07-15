@@ -11,6 +11,7 @@ use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\UserController;
+use App\Models\Attendance;
 
 // Route untuk tes koneksi API
 Route::get('/ping', fn() => response()->json(['message' => 'pong']));
@@ -49,18 +50,16 @@ Route::prefix('v1')->group(function () {
         // ROUTE KHUSUS KARYAWAN
         Route::middleware('role:karyawan')->group(function () {
             Route::apiResource('leave-requests', LeaveRequestController::class);
-            Route::apiResource('attendances', AttendanceController::class);
         });
 
-<<<<<<< HEAD
-=======
         Route::get('/profile', [UserController::class, 'showProfile']);
         Route::post('/profile', [UserController::class, 'updateProfile']);
 
         // Interviews
         Route::apiResource('interviews', InterviewController::class);
-        Route::apiResource('attendances', AttendanceController::class);
->>>>>>> c672ae3cac7446203fa894222a9412733e218b55
+
+        Route::post('attendance', [AttendanceController::class, 'store']);
+
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 
