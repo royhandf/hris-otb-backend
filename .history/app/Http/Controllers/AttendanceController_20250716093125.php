@@ -31,7 +31,7 @@ class AttendanceController extends Controller
         }
         else {
             return response()->json([
-                'message' => 'Dilarang. Anda tidak memiliki izin untuk mengakses resource ini.',
+                'message' => 'Dilarang. ',
                 'user_role' => $user->role,
             ], 403);
         }
@@ -66,7 +66,7 @@ class AttendanceController extends Controller
         });
 
         return response()->json([
-            'message' => 'Absensi kehadiran berhasil ditampilkan.',
+            'message' => 'Absensi kehadiran berhasil dibuat.',
             'data'    => $formatted,
         ]);
     }

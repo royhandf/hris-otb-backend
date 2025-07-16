@@ -66,7 +66,7 @@ class AttendanceController extends Controller
         });
 
         return response()->json([
-            'message' => 'Absensi kehadiran berhasil ditampilkan.',
+            'message' => 'Absensi kehadiran berhasil dibuat.',
             'data'    => $formatted,
         ]);
     }

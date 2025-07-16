@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
             Route::apiResource('positions', PositionController::class);
             Route::apiResource('interviews', InterviewController::class);
             Route::apiResource('job-vacancies', JobVacancyController::class);
+            Route::get('/attendances', [AttendanceController::class, 'index']);
         });
 
         // ROUTE KHUSUS MANAJER
@@ -48,6 +49,7 @@ Route::prefix('v1')->group(function () {
         // ROUTE KHUSUS KARYAWAN
         Route::middleware('role:karyawan')->group(function () {
             Route::apiResource('leave-requests', LeaveRequestController::class);
+            Route::get('/attendances', [AttendanceController::class, 'index']);
             Route::post('/attendances', [AttendanceController::class, 'store']);
         });
 
@@ -58,7 +60,6 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('interviews', InterviewController::class);
 
         Route::post('attendance', [AttendanceController::class, 'store']);
-        Route::get('/attendances', [AttendanceController::class, 'index']);
 
         Route::post('/logout', [AuthController::class, 'logout']);
     });

@@ -21,7 +21,7 @@ class CheckRole
 
         if (! in_array($request->user()->role, $roles)) {
             return response()->json([
-                'message' => 'Dilarang, Anda tidak memiliki izin untuk mengakses resource ini.',
+                'message' => 'Forbidden, you do not have permission to access this resource.',
                 'user_role' => $request->user()->role,
             ], 403);
         }

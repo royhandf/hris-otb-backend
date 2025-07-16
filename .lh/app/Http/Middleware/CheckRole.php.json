@@ -1,0 +1,18 @@
+{
+    "sourceFile": "app/Http/Middleware/CheckRole.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1752633637308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1752633637308,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Middleware;\n\nuse Closure;\nuse Illuminate\\Http\\Request;\nuse Symfony\\Component\\HttpFoundation\\Response;\n\nclass CheckRole\n{\n    /**\n     * Handle an incoming request.\n     *\n     * @param  \\Closure(\\Illuminate\\Http\\Request): (\\Symfony\\Component\\HttpFoundation\\Response)  $next\n     */\n    public function handle(Request $request, Closure $next, ...$roles): Response\n    {\n        if (! $request->user()) {\n            return response()->json(['message' => 'Unauthorized'], 401);\n        }\n\n        if (! in_array($request->user()->role, $roles)) {\n            return response()->json([\n                'message' => 'Dilarang, Anda tidak memiliki izin untuk mengakses resource ini.',\n                'user_role' => $request->user()->role,\n            ], 403);\n        }\n\n        return $next($request);\n    }\n}"
+        }
+    ]
+}

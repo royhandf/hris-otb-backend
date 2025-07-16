@@ -12,6 +12,7 @@ class AttendanceController extends Controller
     public function index()
     {
         $user = Auth::user();
+        dd($user->role);
 
         // Cek apakah user HR
         if ($user->role === 'hr') {
@@ -66,7 +67,7 @@ class AttendanceController extends Controller
         });
 
         return response()->json([
-            'message' => 'Absensi kehadiran berhasil ditampilkan.',
+            'message' => 'Absensi kehadiran berhasil dibuat.',
             'data'    => $formatted,
         ]);
     }
