@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ContractController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\ApplicantController;

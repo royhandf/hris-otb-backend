@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1752634462103,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752731189474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n             Route::apiResource('departments', DepartmentController::class);\n             Route::apiResource('positions', PositionController::class);\n             Route::apiResource('interviews', InterviewController::class);\n             Route::apiResource('job-vacancies', JobVacancyController::class);\n+            Route::apiResource('contracts', ContractController::class);\n         });\n \n         // ROUTE KHUSUS MANAJER\n         Route::middleware('role:manager')->group(function () {\n"
+                },
+                {
+                    "date": 1752731195821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n <?php\n \n+use App\\Http\\Controllers\\API\\ContractController;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\JobVacancyController;\n use App\\Http\\Controllers\\ApplicantController;\n use App\\Http\\Controllers\\AttendanceController;\n"
+                },
+                {
+                    "date": 1752731231647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n <?php\n \n-use App\\Http\\Controllers\\API\\ContractController;\n+use App\\Http\\Controllers\\ContractController;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\JobVacancyController;\n use App\\Http\\Controllers\\ApplicantController;\n use App\\Http\\Controllers\\AttendanceController;\n"
                 }
             ],
             "date": 1752634462103,

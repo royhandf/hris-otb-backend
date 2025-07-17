@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/Models/Contract.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1752725600703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752731736744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,13 +2,15 @@\n \n namespace App\\Models;\n \n use Illuminate\\Database\\Eloquent\\Model;\n+use Illuminate\\Support\\Str;\n \n class Contract extends Model\n {\n     protected $primaryKey = 'contract_id';\n-    public $incrementing = true;\n+    public $incrementing = false; // UUID bukan auto-increment\n+    protected $keyType = 'string'; // UUID adalah string\n \n     protected $fillable = [\n         'employee_id',\n         'type',\n@@ -16,5 +18,16 @@\n         'end_date',\n         'status',\n         'description',\n     ];\n+\n+    protected static function boot()\n+    {\n+        parent::boot();\n+\n+        static::creating(function ($model) {\n+            if (empty($model->contract_id)) {\n+                $model->contract_id = (string) Str::uuid();\n+            }\n+        });\n+    }\n }\n"
+                }
+            ],
+            "date": 1752725600703,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Contract extends Model\n{\n    protected $primaryKey = 'contract_id';\n    public $incrementing = true;\n\n    protected $fillable = [\n        'employee_id',\n        'type',\n        'start_date',\n        'end_date',\n        'status',\n        'description',\n    ];\n}\n"
+        }
+    ]
+}

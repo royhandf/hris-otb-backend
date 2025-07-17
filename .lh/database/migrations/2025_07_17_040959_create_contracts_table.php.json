@@ -1,0 +1,22 @@
+{
+    "sourceFile": "database/migrations/2025_07_17_040959_create_contracts_table.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1752725572557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752731712013,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,16 +8,19 @@\n {\n     public function up()\n     {\n         Schema::create('contracts', function (Blueprint $table) {\n-            $table->id('contract_id');\n-            $table->string('employee_id');\n+            $table->uuid('contract_id')->primary();\n+            $table->uuid('employee_id');\n             $table->enum('type', ['pkwt', 'pkwtt', 'magang']);\n             $table->date('start_date');\n             $table->date('end_date');\n             $table->enum('status', ['aktif', 'berakhir', 'diperpanjang']);\n             $table->text('description')->nullable();\n             $table->timestamps();\n+\n+            // Optional: jika kamu ingin foreign key ke employees table (juga UUID)\n+            // $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');\n         });\n     }\n \n     public function down()\n"
+                }
+            ],
+            "date": 1752725572557,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nclass CreateContractsTable extends Migration\n{\n    public function up()\n    {\n        Schema::create('contracts', function (Blueprint $table) {\n            $table->id('contract_id');\n            $table->string('employee_id');\n            $table->enum('type', ['pkwt', 'pkwtt', 'magang']);\n            $table->date('start_date');\n            $table->date('end_date');\n            $table->enum('status', ['aktif', 'berakhir', 'diperpanjang']);\n            $table->text('description')->nullable();\n            $table->timestamps();\n        });\n    }\n\n    public function down()\n    {\n        Schema::dropIfExists('contracts');\n    }\n}\n"
+        }
+    ]
+}
